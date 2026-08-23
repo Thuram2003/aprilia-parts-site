@@ -1,26 +1,172 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   LOCAL PREMIUM FONT SETUP
+   ───────────────────────────────────────────── */
+@font-face {
+  font-family: 'GT Walsheim';
+  src: url('/font/GT-Walsheim-Pro-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Walsheim';
+  src: url('/font/GT-Walsheim-Pro-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Retail Display';
+  src: url('/font/RetailDisplayDemo-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Retail Display';
+  src: url('/font/RetailDisplayDemo-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --primary: #E30613;
+  --primary-foreground: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --border: rgba(0, 0, 0, 0.1);
+  --muted: #666666;
+  --muted-foreground: #999999;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --font-sans: 'GT Walsheim', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Retail Display', Georgia, serif;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+/* Custom premium styling */
+.premium-shadow {
+  box-shadow: 0 10px 30px -10px rgba(13, 14, 17, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-shadow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(227, 6, 19, 0.08);
+  border-color: rgba(227, 6, 19, 0.2);
+}
+
+.racing-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+}
+
+/* Product card hover effect */
+.product-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -15px rgba(227, 6, 19, 0.15);
+}
+
+.italian-stripe {
+  height: 4px;
+  background: linear-gradient(90deg, #009246 33.3%, #ffffff 33.3%, #ffffff 66.6%, #E30613 66.6%);
+}
+
+/* ─────────────────────────────────────────────
+   DYNAMIC DRIFTING ORB ANIMATION
+   ───────────────────────────────────────────── */
+.smoke-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform, opacity;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.smoke-blob-1 {
+  width: 45vw;
+  height: 45vw;
+  max-width: 500px;
+  max-height: 500px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(227, 6, 19, 0.12) 0%, transparent 70%);
+  animation: smoke-drift-1 20s ease-in-out infinite;
+}
+
+.smoke-blob-2 {
+  width: 38vw;
+  height: 38vw;
+  max-width: 400px;
+  max-height: 400px;
+  bottom: -10%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(0, 146, 70, 0.08) 0%, transparent 70%);
+  animation: smoke-drift-2 25s ease-in-out infinite;
+}
+
+@keyframes smoke-drift-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  33% {
+    transform: translate(4vw, 5vh) scale(1.15);
+    opacity: 0.95;
+  }
+  66% {
+    transform: translate(-3vw, 8vh) scale(0.9);
+    opacity: 0.7;
+  }
+}
+
+@keyframes smoke-drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-6vw, -4vh) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smoke-blob {
+    animation: none;
+  }
 }
